@@ -1,0 +1,13 @@
+env.sh
+
+.vscode/
+
+venv/
+
+s3_client/temp/
+
+__pycache__/
+
+*.pyc
+
+app/extensions/american_gut/__A___abundance_profile\.json
