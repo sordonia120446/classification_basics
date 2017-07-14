@@ -10,8 +10,6 @@ from __future__ import division
 from __future__ import print_function
 
 import io
-import os
-# import urllib
 import requests
 from tempfile import NamedTemporaryFile
 
@@ -89,6 +87,12 @@ def iris_analysis():
     )['accuracy']
     print('\nTest accuracy:  {0: f}\n'.format(accuracy_score))
 
+    # Prediction Test
+    predictions = list(classifier.predict(input_fn=_new_samples))
+    print('New samples, Class predictions:  {}\n'.format(
+        predictions
+    ))
+
     # Close tmp files
     training_file.close()
     test_file.close()
@@ -97,9 +101,6 @@ def iris_analysis():
 
 def _download_iris_data(IRIS_TRAINING_URL, IRIS_TEST_URL):
     """Grabs iris training and test csv's."""
-    training_filename = os.path.basename(IRIS_TRAINING_URL)
-    test_filename = os.path.basename(IRIS_TEST_URL)
-
     # Grab csv data & write to tempfiles
     training_file = NamedTemporaryFile(mode='w+')
     test_file = NamedTemporaryFile(mode='w+')
@@ -117,7 +118,12 @@ def _download_iris_data(IRIS_TRAINING_URL, IRIS_TEST_URL):
     return training_file, test_file
 
 
-def _get_dataset_inputs(data_set):
-    x = tf.constant(data_set.data)
-    y = tf.constant(data_set.target)
-    return x, y
+def _new_samples():
+    new_samples = np.array(
+        [
+            [6.4, 3.2, 4.5, 1.5],
+            [5.8, 3.1, 5.0, 1.7]
+        ],
+        dtype=np.float32
+    )
+    return new_samples
