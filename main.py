@@ -4,7 +4,7 @@ Primary execution.
 @author Sam O | <samuel.ordonia@gmail.com>
 """
 import argparse
-from scripts import iris_analysis
+from scripts import predict_house_prices, iris_analysis
 
 
 """CLARGS"""
@@ -31,6 +31,12 @@ parser.add_argument(
     action='store_true',
     help='Vector Representations of Words.'
 )
+parser.add_argument(
+    '-p',
+    '--house-prices',
+    action='store_true',
+    help='Predict house prices.'
+)
 
 if __name__ == '__main__':
     args = parser.parse_args()
@@ -38,3 +44,6 @@ if __name__ == '__main__':
     if args.iris_analysis:
         print('Running basic classification model on iris flowers')
         iris_analysis()
+    elif args.house_prices:
+        print('Predicting housing prices')
+        predict_house_prices()
